@@ -1,3 +1,8 @@
+import AutoDetectLocation from "@/components/location/AutoDetectLocation";
 export default function Home() {
-  return <div className="">aaaaaa</div>;
+  return (
+    <div className="">
+      <AutoDetectLocation />
+    </div>
+  );
 }
