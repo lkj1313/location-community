@@ -18,9 +18,9 @@ export default function Button({
 }: ButtonProps) {
   // 버튼 크기 스타일
   const sizeClasses = {
-    small: "w-8 h-8", // 작은 사이즈
+    small: "p-0", // 작은 사이즈
     medium: "px-6 py-2 text-base",
-    large: "px-8 py-3 text-lg",
+    large: "px-4 py-3 text-lg",
   };
 
   // 버튼 색상 스타일

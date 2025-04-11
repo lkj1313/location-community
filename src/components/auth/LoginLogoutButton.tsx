@@ -10,8 +10,9 @@ export default function LoginLogoutButton() {
   return (
     <Button
       variant={user ? "secondary" : "primary"}
-      size="medium"
+      size="small"
       onClick={handleClick}
+      className="text-base p-2 "
     >
       {user ? "로그아웃" : "로그인"}
     </Button>

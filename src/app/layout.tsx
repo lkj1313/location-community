@@ -6,6 +6,7 @@ import "./globals.css";
 import BodyWrapper from "@/components/layout/BodyWrapper";
 import ConditionalHeader from "@/components/layout/ConditionalHeader";
 import Head from "next/head";
+import Footer from "@/components/layout/Footer";
 
 // 1. 폰트 객체 생성 (subset, variable 옵션 사용 가능)
 const inter = Inter({
@@ -32,6 +33,7 @@ export default function RootLayout({
         <BodyWrapper>
           <ConditionalHeader />
           {children}
+          <Footer />
         </BodyWrapper>
       </body>
     </html>

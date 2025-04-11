@@ -14,7 +14,7 @@ export default function Input({ label, id, ...props }: InputProps) {
       <input
         {...props}
         id={id}
-        className={`w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${
+        className={`w-full border border-gray-500! px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition   placeholder-gray-400 ${
           props.className || ""
         }`}
       />

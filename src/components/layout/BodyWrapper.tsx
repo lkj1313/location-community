@@ -11,7 +11,7 @@ export default function BodyWrapper({
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-300 ${
+      className={`min-h-screen flex flex-col transition-colors duration-300 ${
         isDarkMode ? "bg-gray-900 text-white" : "bg-white text-black"
       }`}
     >
