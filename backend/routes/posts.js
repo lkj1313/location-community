@@ -53,13 +53,15 @@ router.post("/", async (req, res) => {
 // 글 목록 가져오기
 router.get("/", async (req, res) => {
   try {
-    const { region, category } = req.query;
-
+    const { region, category, page = 1, limit = 5 } = req.query;
     const filter = {};
     if (region) filter.region = region;
     if (category) filter.category = category;
 
-    const posts = await Post.find(filter).sort({ createdAt: -1 });
+    const posts = await Post.find(filter)
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(Number(limit));
 
     res.status(200).json(posts);
   } catch (err) {
@@ -82,6 +84,30 @@ router.get("/:id", async (req, res) => {
     res.json(post);
   } catch (err) {
     console.error("❌ 게시글 조회 실패:", err);
+    res.status(500).json({ message: "서버 오류", error: err.message });
+  }
+});
+// 게시글 삭제
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const idToken = req.headers.authorization?.split(" ")[1];
+    if (!idToken) return res.status(401).json({ message: "토큰이 없습니다." });
+
+    const decoded = await admin.auth().verifyIdToken(idToken);
+
+    const post = await Post.findById(id);
+    if (!post)
+      return res.status(404).json({ message: "게시글이 존재하지 않습니다." });
+
+    if (post.author.uid !== decoded.uid) {
+      return res.status(403).json({ message: "작성자만 삭제할 수 있습니다." });
+    }
+
+    await post.deleteOne();
+    res.status(200).json({ message: "게시글이 삭제되었습니다." });
+  } catch (err) {
+    console.error("❌ 게시글 삭제 실패:", err);
     res.status(500).json({ message: "서버 오류", error: err.message });
   }
 });

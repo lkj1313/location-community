@@ -16,7 +16,8 @@ export default function PostDetailPage() {
     setComment,
     handleSubmit,
     comments,
-    handleDelete,
+    handleCommentDelete,
+    handleDeletePost,
     user,
   } = usePostDetail(id);
 
@@ -25,7 +26,7 @@ export default function PostDetailPage() {
 
   return (
     <div className="flex-grow w-full min-h-[200px] mx-auto px-4 py-10 dark:border dark:border-gray-700 rounded sm:px-30">
-      <PostContent post={post} />
+      <PostContent post={post} handleDeletePost={handleDeletePost} />
       <CommentForm
         comment={comment}
         setComment={setComment}
@@ -34,7 +35,7 @@ export default function PostDetailPage() {
       <CommentList
         comments={comments}
         currentUid={user?.uid}
-        onDelete={handleDelete}
+        onDelete={handleCommentDelete}
       />
     </div>
   );

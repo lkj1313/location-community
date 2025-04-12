@@ -2,7 +2,7 @@
 import { ButtonHTMLAttributes } from "react";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "light" | "gray"; // 스타일 옵션
+  variant?: "primary" | "secondary" | "light" | "gray" | "danger"; // 스타일 옵션
   size?: "small" | "medium" | "large"; // 버튼 크기 옵션
   fullWidth?: boolean; // 버튼을 전체 너비로 할지 여부
   className?: string; // 추가적인 클래스명
@@ -29,6 +29,7 @@ export default function Button({
     secondary: "bg-gray-600 text-white hover:bg-gray-700",
     light: "bg-gray-200 text-gray-800 hover:bg-gray-300",
     gray: "bg-gray-800",
+    danger: "bg-red-500 text-white hover:bg-red-600",
   };
 
   return (

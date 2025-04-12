@@ -4,7 +4,7 @@ import { Search } from "lucide-react";
 import Link from "next/link";
 
 import AutoDetectLocation from "@/components/location/AutoDetectLocation";
-import CategoryCard from "@/components/ui/CategoryCard";
+import CategoryCard from "@/components/Post/CategoryCard";
 import Input from "@/components/ui/Input";
 import LocationModal from "@/components/location/LocationModal";
 import { categories } from "@/constants/categories";

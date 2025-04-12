@@ -1,26 +1,49 @@
+"use client";
 import { PostType } from "@/types/posts";
 import useDarkMode from "@/store/darkModeStroe";
+import Button from "../ui/Button";
+import { auth } from "@/lib/firebase";
 
-export default function PostContent({ post }: { post: PostType }) {
+interface Props {
+  post: PostType;
+  handleDeletePost: () => void;
+}
+
+export default function PostContent({ post, handleDeletePost }: Props) {
   const { isDarkMode } = useDarkMode();
+  const currentUid = auth.currentUser?.uid;
 
   return (
-    <>
-      {/* 제목 */}
-      <h1
-        className={`text-2xl font-bold mb-2 ${
-          isDarkMode ? "text-white" : "text-gray-900"
-        }`}
-      >
-        {post.title}
-      </h1>
+    <div className="flex flex-col gap-1">
+      <div className="flex justify-between">
+        {/* 제목 */}
+        <h1
+          className={`text-2xl font-bold mb-2 ${
+            isDarkMode ? "text-white" : "text-gray-900"
+          }`}
+        >
+          {post.title}
+        </h1>
+
+        {/* ✅ 본인 글일 때만 삭제 버튼 표시 */}
+        {currentUid === post.author.uid && (
+          <Button
+            onClick={handleDeletePost}
+            variant="danger"
+            size="medium"
+            className="mt-1"
+          >
+            삭제
+          </Button>
+        )}
+      </div>
 
       {/* 작성 정보 */}
       <div
         className={`flex justify-between text-sm border-b pb-2 mb-6 ${
           isDarkMode
-            ? "text-gray-400 border-gray-700" //  다크 모드 텍스트 + 테두리 색상
-            : "text-gray-500 border-gray-500" // 라이트 모드 텍스트 + 테두리 색상
+            ? "text-gray-400 border-gray-700"
+            : "text-gray-500 border-gray-500"
         }`}
       >
         <div>
@@ -56,6 +79,6 @@ export default function PostContent({ post }: { post: PostType }) {
           ))}
         </div>
       )}
-    </>
+    </div>
   );
 }

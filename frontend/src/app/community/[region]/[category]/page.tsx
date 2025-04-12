@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { usePosts } from "@/hooks/posts/usePosts";
 import PostCard from "@/components/Post/PostCard";
+import { useEffect, useRef } from "react";
 
 export default function CommunityBoardPage() {
   const rawRegion = useParams().region;
@@ -11,11 +12,42 @@ export default function CommunityBoardPage() {
   const region = decodeURIComponent(rawRegion as string);
   const category = decodeURIComponent(rawCategory as string);
 
-  const { posts, isLoading, isError } = usePosts(region, category);
+  const {
+    data,
+    isLoading,
+    isError,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = usePosts(region, category);
+
+  const observerRef = useRef<HTMLDivElement | null>(null);
+
+  // 📌 무한 스크롤 인터섹션 옵저버
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNextPage) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 1 }
+    );
+
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
+    }
+
+    return () => {
+      if (observerRef.current) {
+        observer.unobserve(observerRef.current);
+      }
+    };
+  }, [fetchNextPage, hasNextPage]);
 
   return (
     <div className="flex-grow flex flex-col gap-3 px-4 py-8 max-w-2xl mx-auto">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between w-sm items-center mb-6">
         <h1 className="text-xl font-bold">
           [{region}] - {category} 게시판
         </h1>
@@ -37,22 +69,34 @@ export default function CommunityBoardPage() {
           게시글을 불러오는 데 실패했습니다.
         </p>
       )}
-      {!isLoading && posts.length === 0 && (
+      {!isLoading && data?.pages[0]?.length === 0 && (
         <p className="text-sm text-gray-500 text-center py-10">
           아직 게시글이 없습니다.
         </p>
       )}
 
       <div className="space-y-4">
-        {posts.map((post) => (
-          <PostCard
-            key={post._id}
-            post={post}
-            region={region}
-            category={category}
-          />
-        ))}
+        {data?.pages.map((page, i) =>
+          page.map((post) => (
+            <PostCard
+              key={post._id}
+              post={post}
+              region={region}
+              category={category}
+            />
+          ))
+        )}
       </div>
+
+      {/* 👇 다음 페이지 로딩 트리거 */}
+      <div ref={observerRef} className="h-10" />
+
+      {/* ⏳ 다음 페이지 로딩 중 UI */}
+      {isFetchingNextPage && (
+        <p className="text-center text-sm text-gray-500 py-4">
+          다음 페이지 불러오는 중...
+        </p>
+      )}
     </div>
   );
 }

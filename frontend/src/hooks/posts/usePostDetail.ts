@@ -1,7 +1,9 @@
+"use client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { auth } from "@/lib/firebase";
 import { PostType } from "@/types/posts";
+import { useRouter, useParams } from "next/navigation";
 
 export type CommentType = {
   _id: string;
@@ -14,6 +16,8 @@ export const usePostDetail = (postId: string) => {
   const [comment, setComment] = useState("");
   const queryClient = useQueryClient();
   const user = auth.currentUser;
+  const router = useRouter();
+  const { region, category } = useParams();
 
   const postQuery = useQuery<PostType>({
     queryKey: ["post", postId],
@@ -63,8 +67,31 @@ export const usePostDetail = (postId: string) => {
     setComment("");
     queryClient.invalidateQueries({ queryKey: ["comments", postId] });
   };
+  // 포스트삭제
+  const handleDeletePost = async () => {
+    if (!user) return alert("로그인 후 삭제 가능합니다.");
+    const confirm = window.confirm("정말 이 글을 삭제하시겠습니까?");
+    if (!confirm) return;
 
-  const handleDelete = async (commentId: string) => {
+    const idToken = await user.getIdToken();
+
+    const res = await fetch(`http://localhost:4000/api/posts/${postId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${idToken}`,
+      },
+    });
+
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.message || "글 삭제 실패");
+    }
+
+    alert("글이 삭제되었습니다.");
+    router.push(`/community/${region}/${category}`);
+  };
+  // 댓글삭제
+  const handleCommentDelete = async (commentId: string) => {
     if (!user) return;
     const idToken = await user.getIdToken();
     const confirm = window.confirm("댓글을 삭제하시겠습니까?");
@@ -90,7 +117,8 @@ export const usePostDetail = (postId: string) => {
     comment,
     setComment,
     handleSubmit,
-    handleDelete,
+    handleCommentDelete,
+    handleDeletePost,
     ...postQuery,
     comments: commentQuery.data ?? [],
     isLoadingComments: commentQuery.isLoading,

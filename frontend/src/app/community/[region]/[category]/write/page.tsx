@@ -5,7 +5,7 @@ import { useWritePost } from "@/hooks/posts/useWritePost";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Textarea from "@/components/ui/Textarea";
-import TagList from "@/components/ui/TagList";
+import TagList from "@/components/Post/TagList";
 
 const WritePostPage = () => {
   const rawRegion = useParams().region;
