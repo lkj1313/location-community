@@ -37,18 +37,29 @@
 - Zustand로 다크 모드 상태 전역 관리
 - Tailwind + 조건부 className으로 스타일링 대응
 
+### 🗺 위치 기반 기능
+
+- 브라우저 Geolocation API로 사용자 위치(위도/경도) 수집
+- Kakao 지도 API를 통해 위/경도 → 시/도 지역명으로 변환
+- Zustand로 지역 상태 전역 관리
+- 게시글 작성 및 목록 조회 시 해당 지역 정보를 기반으로 동작
+
 ---
 
 ## 🛠 기술 스택
 
-| 영역        | 기술                                                               |
-| ----------- | ------------------------------------------------------------------ |
-| 프론트엔드  | React (Next.js 14, App Router), TypeScript                         |
-| 상태 관리   | Zustand                                                            |
-| 데이터 통신 | React Query (`useInfiniteQuery` 포함)                              |
-| 인증        | Firebase Authentication                                            |
-| 백엔드      | Express + MongoDB (Mongoose)                                       |
-| 스타일링    | Tailwind CSS, 다크 모드 대응                                       |
-| 기타        | React Query Devtools, 환경변수 분리, `clsx` 미사용 방식 class 처리 |
+## 🛠 기술 스택
+
+| 영역        | 기술                                                                         |
+| ----------- | ---------------------------------------------------------------------------- |
+| 프론트엔드  | React (Next.js 15 - App Router), TypeScript                                  |
+| 상태 관리   | Zustand                                                                      |
+| 데이터 통신 | React Query (`useInfiniteQuery`, `invalidateQueries`)                        |
+| 인증        | Firebase Authentication (JWT + HttpOnly 쿠키)                                |
+| 백엔드      | Express, MongoDB (Mongoose), REST API                                        |
+| 위치 기능   | Geolocation API, Kakao Map API (Reverse Geocoding)                           |
+| 스타일링    | Tailwind CSS, 조건부 className, 다크 모드 대응                               |
+| 유틸/기타   | React Query Devtools, 환경변수 관리 (`.env`), `clsx` 미사용 방식 클래스 처리 |
+| 컴포넌트화  | UI Button, Input, Textarea 등 공용 컴포넌트 구성 및 다크 대응 완비           |
 
 ---
