@@ -32,8 +32,8 @@ export default function Footer() {
         <div className="space-y-2">
           <h3 className="font-semibold text-gray-300">문의</h3>
           <ul className="text-gray-400 space-y-1">
-            <li>Email: loca@example.com</li>
-            <li>GitHub: @loca-dev</li>
+            <li>Email: smm45108@gmail.com</li>
+            <li>GitHub: https://github.com/lkj1313</li>
           </ul>
         </div>
       </div>
