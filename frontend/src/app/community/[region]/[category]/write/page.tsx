@@ -1,102 +1,64 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useWritePost } from "@/hooks/post/useWritePost";
+import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
+import Textarea from "@/components/ui/Textarea";
+import TagList from "@/components/ui/TagList";
 
 const WritePostPage = () => {
-  const { region, category } = useParams();
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [tagInput, setTagInput] = useState("");
-  const [tags, setTags] = useState<string[]>([]);
+  const rawRegion = useParams().region;
+  const rawCategory = useParams().category;
+  const region = decodeURIComponent(rawRegion as string);
+  const category = decodeURIComponent(rawCategory as string);
 
-  const addTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && tagInput.trim()) {
-      e.preventDefault();
-      if (!tags.includes(tagInput.trim())) {
-        setTags([...tags, tagInput.trim()]);
-      }
-      setTagInput("");
-    }
-  };
-
-  const removeTag = (tagToRemove: string) => {
-    setTags(tags.filter((tag) => tag !== tagToRemove));
-  };
-
-  const handleSubmit = () => {
-    if (!title || !content) {
-      alert("제목과 내용을 입력해주세요.");
-      return;
-    }
-
-    const postData = {
-      title,
-      content,
-      region,
-      category,
-      tags,
-    };
-
-    console.log("제출 데이터:", postData);
-    // TODO: POST API로 전송
-  };
+  const {
+    title,
+    setTitle,
+    content,
+    setContent,
+    tagInput,
+    setTagInput,
+    tags,
+    addTag,
+    removeTag,
+    handleSubmit,
+  } = useWritePost(region, category);
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
+    <div className="w-96 mx-auto p-6">
       <h1 className="text-xl font-bold mb-6">
-        [{decodeURIComponent(region as string)}]{" "}
-        {decodeURIComponent(category as string)} 글쓰기
+        [{region}] {category} 글쓰기
       </h1>
 
-      <div className="space-y-4">
-        <input
+      <div className="space-y-4 ">
+        <Input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="제목을 입력하세요"
-          className="w-full border rounded px-4 py-2 text-sm focus:outline-none focus:ring focus:border-orange-400"
+          className="text-sm"
         />
 
-        <textarea
+        <Textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder="내용을 입력하세요"
-          className="w-full h-60 border rounded px-4 py-2 text-sm resize-none focus:outline-none focus:ring focus:border-orange-400"
         />
-
-        {/* ✅ 태그 입력 */}
         <div>
-          <input
+          <Input
             value={tagInput}
             onChange={(e) => setTagInput(e.target.value)}
             onKeyDown={addTag}
             placeholder="태그를 입력하고 Enter를 누르세요"
-            className="w-full border rounded px-4 py-2 text-sm focus:outline-none focus:ring focus:border-orange-400"
+            className="text-sm w-64"
           />
-          <div className="flex flex-wrap gap-2 mt-2">
-            {tags.map((tag) => (
-              <span
-                key={tag}
-                className="bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-sm flex items-center gap-1"
-              >
-                #{tag}
-                <button
-                  onClick={() => removeTag(tag)}
-                  className="text-xs text-orange-500 hover:text-orange-700"
-                >
-                  ✕
-                </button>
-              </span>
-            ))}
-          </div>
+          <TagList tags={tags} onRemove={removeTag} />
         </div>
 
-        <button
-          onClick={handleSubmit}
-          className="bg-orange-500 text-white w-full py-2 rounded hover:bg-orange-600 transition"
-        >
+        <Button onClick={handleSubmit} fullWidth>
           등록하기
-        </button>
+        </Button>
       </div>
     </div>
   );

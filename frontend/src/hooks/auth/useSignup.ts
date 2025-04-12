@@ -24,16 +24,34 @@ export function useSignUp() {
     setLoading(true);
 
     try {
+      // 1. Firebase Auth 회원가입
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         form.email,
         form.password
       );
-
       const user = userCredential.user;
 
+      // 2. Firebase 프로필 업데이트
       await updateProfile(user, {
         displayName: form.name,
+      });
+
+      // 3. Firebase ID 토큰 발급
+      const idToken = await user.getIdToken();
+
+      // 4. 내 백엔드에 유저 정보 저장
+      await fetch("http://localhost:4000/api/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${idToken}`,
+        },
+        body: JSON.stringify({
+          uid: user.uid,
+          email: user.email,
+          nickname: form.name,
+        }),
       });
 
       alert("회원가입 성공");

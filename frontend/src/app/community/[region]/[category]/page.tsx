@@ -21,46 +21,6 @@ const dummyPosts = [
     createdAt: "2025-04-09T15:22:00Z",
     category: "중고거래",
   },
-  {
-    _id: "2",
-    title: "자전거 팝니다",
-    content: "상태 아주 좋고, 가격은 10만원입니다. 직거래 가능해요!",
-    author: { nickname: "닉네임2" },
-    createdAt: "2025-04-09T15:22:00Z",
-    category: "중고거래",
-  },
-  {
-    _id: "2",
-    title: "자전거 팝니다",
-    content: "상태 아주 좋고, 가격은 10만원입니다. 직거래 가능해요!",
-    author: { nickname: "닉네임2" },
-    createdAt: "2025-04-09T15:22:00Z",
-    category: "중고거래",
-  },
-  {
-    _id: "2",
-    title: "자전거 팝니다",
-    content: "상태 아주 좋고, 가격은 10만원입니다. 직거래 가능해요!",
-    author: { nickname: "닉네임2" },
-    createdAt: "2025-04-09T15:22:00Z",
-    category: "중고거래",
-  },
-  {
-    _id: "2",
-    title: "자전거 팝니다",
-    content: "상태 아주 좋고, 가격은 10만원입니다. 직거래 가능해요!",
-    author: { nickname: "닉네임2" },
-    createdAt: "2025-04-09T15:22:00Z",
-    category: "중고거래",
-  },
-  {
-    _id: "2",
-    title: "자전거 팝니다",
-    content: "상태 아주 좋고, 가격은 10만원입니다. 직거래 가능해요!",
-    author: { nickname: "닉네임2" },
-    createdAt: "2025-04-09T15:22:00Z",
-    category: "중고거래",
-  },
 ];
 
 const formatDate = (dateStr: string) => {
