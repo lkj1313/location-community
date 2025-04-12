@@ -44,6 +44,7 @@ const WritePostPage = () => {
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder="내용을 입력하세요"
+          className="h-60"
         />
         <div>
           <Input

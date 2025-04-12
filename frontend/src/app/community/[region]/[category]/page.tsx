@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { usePosts } from "@/hooks/posts/usePosts";
-import PostCard from "@/components/community/PostCard";
+import PostCard from "@/components/Post/PostCard";
 
 export default function CommunityBoardPage() {
   const rawRegion = useParams().region;

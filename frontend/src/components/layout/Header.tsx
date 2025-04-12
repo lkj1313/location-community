@@ -23,7 +23,7 @@ export default function Header({ children }: HeaderProps) {
             height={50}
             className=""
           />{" "}
-          <span className="select-none  ">Loca</span>
+          <span className="select-none">Loca</span>
         </Link>
         {children}
         <div className="flex items-center gap-5 sm:gap-10">
