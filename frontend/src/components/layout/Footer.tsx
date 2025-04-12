@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
-    <footer className="w-full bg-gray-900 text-white py-5 mt-20">
-      <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start gap-10 text-sm">
+    <footer className="w-full bg-gray-900 text-white py-5 mt-0 border-t px-6 sm:px-30">
+      <div className="max-w-6xl  flex flex-col md:flex-row justify-between items-start gap-10 text-sm">
         {/* 왼쪽 로고 + 소개 */}
         <div>
           <h2 className="text-lg font-bold mb-2">Loca</h2>

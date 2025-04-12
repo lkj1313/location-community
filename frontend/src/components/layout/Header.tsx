@@ -13,7 +13,7 @@ export default function Header({ children }: HeaderProps) {
   const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   return (
-    <header className="w-screen   shadow-md border-b border-green-100">
+    <header className="w-screen  bg-gray-900 text-white shadow-md border-b border-green-100">
       <div className="w-full  flex  items-center justify-between sm:px-30 py-3">
         <Link href="/" className="flex items-center cursor-pointer">
           <Image

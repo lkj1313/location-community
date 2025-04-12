@@ -67,4 +67,22 @@ router.get("/", async (req, res) => {
     res.status(500).json({ message: "게시글 목록 조회 실패" });
   }
 });
+
+// 게시글 상세 조회
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const post = await Post.findById(id);
+
+    if (!post) {
+      return res.status(404).json({ message: "게시글을 찾을 수 없습니다." });
+    }
+
+    res.json(post);
+  } catch (err) {
+    console.error("❌ 게시글 조회 실패:", err);
+    res.status(500).json({ message: "서버 오류", error: err.message });
+  }
+});
 export default router;

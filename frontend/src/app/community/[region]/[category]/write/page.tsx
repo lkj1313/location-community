@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useWritePost } from "@/hooks/post/useWritePost";
+import { useWritePost } from "@/hooks/posts/useWritePost";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Textarea from "@/components/ui/Textarea";
